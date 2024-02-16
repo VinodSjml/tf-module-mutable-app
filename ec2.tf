@@ -17,8 +17,10 @@ resource "aws_instance" "od" {
   vpc_security_group_ids = [aws_security_group.allows_app.id]
 }
 
-resource "tags" "name" {
-  count = locals.INSTANCE_COUNT
-  resource_id = element(locals.INSTANCE_IDS, count.index)
-  name = "${var.COMPONENT}-${var.ENV}"
+resource "aws_ec2_tag" "app_tags" {
+  count                         = local.INSTANCE_COUNT
+
+  resource_id                   = element(local.INSTANCE_IDS, count.index)
+  key                           = "Name"
+  value                         = "${var.COMPONENT}-${var.ENV}"
 }
