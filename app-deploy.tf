@@ -1,0 +1,16 @@
+resource "null_resource" "app" {
+  count = local.INSTANCE_COUNT
+  connection {
+    type     = "ssh"
+    user     = local.SSH_USER
+    password = local.SSH_PASSWORD
+    host     = element(local.INSTANCE_PRIVATE_IPS)
+  }
+
+  provisioner "remote-exec" {
+    inline = [
+       "sleep 30", 
+      "ansible-pull -U https://github.com/VinodSjml/ansible.git -e env=${var.ENV} -e component=${var.COMPONENT} roboshop-pull.yml"
+    ]
+  }
+}
