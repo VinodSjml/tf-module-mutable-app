@@ -10,7 +10,7 @@ resource "aws_lb_listener" "private" {
   }
 }
 
-resource "aws_lb_listener_rule" "host_based_weighted_routing" {
+resource "aws_lb_listener_rule" "private_lb_listner_rule" {
     count      = var.INTERNAL ? 1 : 0
   listener_arn = aws_lb_listener.private.arn
   priority     = 99
@@ -22,7 +22,7 @@ resource "aws_lb_listener_rule" "host_based_weighted_routing" {
 
   condition {
     host_header {
-      values = ["${var.COMPONENT}-${var.ENV}.data.terraform_remote_state.vpc.outputs.PRIVATE_HOSTED_ZONE_NAME"]
+      values = ["${var.COMPONENT}-${var.ENV}.${data.terraform_remote_state.vpc.outputs.PRIVATE_HOSTED_ZONE_NAME}"]
     }
   }
 }
