@@ -3,7 +3,7 @@ resource "aws_lb_listener" "private" {
 
   load_balancer_arn = data.terraform_remote_state.alb.outputs.PRIVATE_ALB_ARN
   port              = "80"
-  protocol          = "HTTPS"
+  protocol          = "HTTP"
 
   default_action {
     type             = "forward"
