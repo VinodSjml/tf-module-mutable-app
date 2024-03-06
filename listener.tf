@@ -11,11 +11,17 @@ resource "aws_lb_listener" "private" {
   }
 }
 
+resource "random_integer" "priority" {
+  min = 100
+  max = 500
+
+}
+
 resource "aws_lb_listener_rule" "private_lb_listner_rule" {
     count      = var.INTERNAL ? 1 : 0
 
   listener_arn = aws_lb_listener.private.*.arn[0]
-  priority     = 99
+  priority     = random_integer.priority.result
 
   action {
     type             = "forward"
