@@ -1,6 +1,6 @@
 resource "aws_lb_target_group" "app" {
   name        = "${var.COMPONENT}-${var.ENV}-tg"
-  target_type = "ip"
+  # target_type = "ip"
   port        = 80
   protocol    = "TCP"
   vpc_id      = data.terraform_remote_state.vpc.outputs.VPC_ID
