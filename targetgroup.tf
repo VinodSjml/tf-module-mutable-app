@@ -4,11 +4,21 @@ resource "aws_lb_target_group" "app" {
   port        = 80
   protocol    = "TCP"
   vpc_id      = data.terraform_remote_state.vpc.outputs.VPC_ID
+
+  health_check {
+    enabled             = true 
+    healthy_threshold   = 2 
+    interval            = 5 
+    timeout             = 4
+    path                = "/health"
+    unhealthy_threshold = 2
+
+  }
 }
 
 resource "aws_lb_target_group_attachment" "app" {
     count          = local.INSTANCE_COUNT
   target_group_arn = aws_lb_target_group.app.arn
   target_id        = element(local.INSTANCE_PRIVATE_IPS, count.index)
-  port             = 80
+  port             = var.APP_PORT
 }
