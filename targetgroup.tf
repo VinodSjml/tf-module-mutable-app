@@ -20,6 +20,6 @@ resource "aws_lb_target_group" "app" {
 resource "aws_lb_target_group_attachment" "app" {
     count          = local.INSTANCE_COUNT
   target_group_arn = aws_lb_target_group.app.arn
-  target_id        = element(local.INSTANCE_PRIVATE_IPS, count.index)
+  target_id        = element(local.INSTANCE_IDS, count.index)
   port             = var.APP_PORT
 }
