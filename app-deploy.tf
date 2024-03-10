@@ -10,7 +10,7 @@ resource "null_resource" "app" {
   provisioner "remote-exec" {
     inline = [
        "sleep 30", 
-      "ansible-pull -U https://github.com/VinodSjml/ansible.git -e env=${var.ENV} -e component=${var.COMPONENT} roboshop-pull.yml"
+      "ansible-pull -U https://github.com/VinodSjml/ansible.git -e env=${var.ENV} -e APP_VERSION=${var.APP_VERSION} -e component=${var.COMPONENT} roboshop-pull.yml"
     ]
   }
 }
